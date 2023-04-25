@@ -15,7 +15,7 @@ server.bind(ADDR)
 
 
 def handle_client(conn, addr):
-    print(f"пользователь {addr} подключен")
+    print(f"client {addr} connected")
 
     connected = True
     while connected:
@@ -27,20 +27,20 @@ def handle_client(conn, addr):
                 connected = False
 
             print(f"[{addr}] {msg}")
-            conn.send("Сообщение получено".encode(FORMAT))
+            conn.send("Message received".encode(FORMAT))
 
     conn.close()
 
 
 def start():
     server.listen()
-    print(f"ждемс {SERVER}")
+    print(f"waiting {SERVER}")
     while True:
         conn, addr = server.accept()
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
-        print(f"подключено пользовательей  {threading.active_count()-1}")
+        print(f"clients connected  {threading.active_count()-1}")
 
 
-print("стартуем....")
+print("let's go...")
 start()
